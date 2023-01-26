@@ -1,0 +1,19 @@
+---
+title: "Polynomial regression using orthogonal polynomial and multicolinearity"
+author: "Chetana Jamadar"
+date: "2023-01-03"
+output: html_document
+---
+Observe the scatter plot of the above data. fit the second order polynomial the express the avg annual cost as a function of recorder quantity.Use orthogonal polynomial to fit the model.Is there evidence that quadratic term is statistically significant?comment on need the quadratic term in the model.
+```{r}
+x=c(50,75,100,125,150,175,200,225,250,275);x;
+y=c(335,326,316,313,311,314,318,328,337,345);y;
+plot(x,y)
+model_1=lm(y~x+I(x^2))
+summary(model_1)
+Model_2=lm(y~poly(x,2))
+Model_2
+summary(Model_2)
+
+```
+

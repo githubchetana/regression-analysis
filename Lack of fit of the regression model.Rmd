@@ -1,0 +1,105 @@
+---
+title: "Lack of fit of regression model"
+author: "Chetana Jamadar"
+date: "2022-12-19"
+output: html_document
+---
+1. Consider the following data,(DATA given by code)
+Fit the linear regression model of Y on X1 and X2. Obtain an estimate of pure error term and hence
+perform the lack of fit test.
+```{r}
+#------------Que.2---------------------
+y=c(26,24,175,160,163,55,62,100,26,30,70,71)
+x1=c(1,1,1.5,1.5,1.5,1,2,0.5,1,1,1,1)
+x2=c(1,1,4,4,4,2,5,3,2,2,3,3)
+M1=lm(y~x1+x2) #Reduced
+M1
+M2=lm(y~0+as.factor(x1)+as.factor(x2)) #Full
+M2
+anova(M1,M2)
+```
+```{r}
+#-------------Que.4------------------
+y=c(16.68,11.50,12.03,14.88,13.75,18.11,8.00,17.83,79.24,21.50,40.33,21.00,13.5,19.75,24.00,
+ 29.00,15.35,19.00,9.50,35.10,17.90,52.32,18.75,19.83,10.75)
+x1=c(7.00,3.00,3.00,4.00,6.00,7.00,2.00,7.00,30.00,5.00,16.00,10.00,4.00,6.00,9.00,10.00,
+ 6.00,7.00,3.00,17.00,10.00,26.00,9.00,8.00,4.00)
+x2=c(560,226,340,80,150,330,110,210,1460,605,688,215,255,462,448,776,200,132,36
+ ,770,140,810,450,635,150)
+M1=lm(y~x1+x2)
+M1
+M2=lm(y~0+as.factor(x1)+as.factor(x2)) #Full
+M2
+anova(M1,M2)
+fit=lm(y~x1+x2)
+fit
+par(mfrow=c(2,2))
+plot(M1)
+anova(M1)
+hist(fit$residuals)
+plot(x1,fit$residuals)
+plot(x2,fit$residuals)
+#R-statistic
+summary(fit)
+#To find Standardise residuals
+e=fit$residuals
+e
+d=e/3.258
+d
+d>2
+#To find Studantise residuls
+# n=25
+# x=matrix(c(rep(1,n),x1,x2),25,3);x
+# s=solve(t(x)%*%x);s
+# H=x%*%s%*%t(x) #command : diag(H) is h=hatvalues(fit)
+# diag(H)
+ h=hatvalues(fit)
+# r=e/sqrt(3.258^2*(1-h))
+# r[r>2] # 9th obs outlier
+rstandard(fit) #This command is for studantised residuals
+r
+#to find PRESS residuals
+e_=e/(1-h)
+#To find R student
+# n=25
+# k=2
+# p=k+1
+# MS_res=sum(e^2)/(n-p)
+# MS_res
+# s2=((n-p)*MS_res-e^2/(1-h))/(n-p-1)
+# s2
+# t=e/sqrt(s2*(1-h))
+# t[t>2]
+# or
+rstudent(fit) #To get r student
+#To delete exceed observations
+y=y[-9]
+x1=x1[-9]
+x2=x2[-9]
+y=y[-20]
+x1=x1[-20]
+x2=x2[-20]
+length(y)
+length(x1)
+length(x2)
+fit_=lm(y~x1+x2)
+fit_
+summary(fit_)
+plot(fit_)
+# To get VIF use car package
+#library(car)
+
+```
+2. The yield of a chemical process is related to the concentration of the reactant and the operating
+temperature. An experiment has been conducted with the following results.
+(a) Fit the linear regression model of Y on X1 and X2.
+(b) Obtain an estimate of pure error term and hence perform the lack of fit test.
+```{r}
+y=c(81,89,83,81,79,88,82,90)
+x1=c(1,1,2,2,1,1,2,2)
+x2=c(150,180,150,180,150,180,150,180)
+fit=lm(y~x1+x2)
+Fit1=lm(y~0+as.factor(x1)+as.factor(x2))
+anova(fit,Fit1) #lack of fit test
+```
+

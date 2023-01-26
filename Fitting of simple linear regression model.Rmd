@@ -1,0 +1,32 @@
+---
+title: "Fitting of simple reg model"
+author: "Chetana Jamadar"
+date: "2023-01-03"
+output: html_document
+---
+The following information was obtained from maneger of a city water department for predicting the consumption of water(in gallons)from the size household:
+```{r}
+x=c(2,7,9,4,12,6,9,3,3,2);x
+y=c(650,1200,1300,430,1400,900,1800,640,793,925)
+#########(1)###########3
+plot(x,y)
+##########2)###########
+cor(x,y)
+cor.test(x,y,method="pearson")
+#############(3)###################
+Model_1=glm(y~x,family=gaussian);Model_1
+###########(4)#############
+summary(Model_1)
+############(5)#################
+anova(Model_1)
+P_value=pf(14.58,1,8,lower.tail =F)
+P_value
+###########(6)############
+abline(Model_1)
+############(7)########
+confint(Model_1,level=0.95)
+############(8)##########
+predict.lm(Model_1,data.frame(x=5),interval = "confidence")
+
+```
+
